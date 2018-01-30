@@ -111,7 +111,7 @@ public class Banque {
 						break;
 					}
 					case 3 : {
-						MenuBanque.MenuTransaction(BIDV);
+						//MenuBanque.MenuTransaction(BIDV);
 						break; 
 					}
 					default :{

@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import com.ckomsa.controller.Client;
 import com.ckomsa.controller.Compte;
+import com.ckomsa.controller.Transaction;
+import com.ckomsa.controller.TypeTransaction;
 import com.ckomsa.main.Banque;
 
 public class Menu {
@@ -76,13 +78,15 @@ public class Menu {
 		idCompte = donnee.nextInt(); 
 		client1 =  new Client(banque, nom, idClient);
 		compte = new Compte(client1, idCompte); 
-		this.MenuTransaction(banque);
+		this.MenuTransaction(banque , client1, compte);
 	}
 	
-	public void MenuTransaction(Banque banque) {
+	public void MenuTransaction(Banque banque, Client client, Compte compte) {
 		this.ClearScreen();
 		Scanner sc =new Scanner(System.in);
 		int choix ; 
+		double montant = 0 ;
+		String typeTransation ; 
 		//int choix = sc.nextInt(); 
 		System.out.println("###### Menu Transaction - Entrez votre choix ######");
 		System.out.println("Entrez 1 pour depot  "); 
@@ -91,7 +95,11 @@ public class Menu {
 		choix = sc.nextInt();
 		switch(choix) {
 			case 1 : {
-				System.out.println("depot");
+				// depot
+				System.out.print("Entrez le montrant de transaction : ");
+				montant = sc.nextDouble(); 
+				TypeTransaction typetransaction = new TypeTransaction(banque , "depot");
+				Transaction newTransation = new Transaction(client, compte,typetransaction, montant );
 				break; 
 			}
 			case 2 : {
