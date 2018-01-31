@@ -46,4 +46,14 @@ public class Client {
 			System.out.println(this.listeCompte.get(i).getNumCompte());
 		}
 	}
+	
+	public Compte getCompte(int numCompte) {
+		Compte compte = null ;
+		for(int i = 0 ; i < this.listeCompte.size(); i++) {
+			if(this.listeCompte.get(i).getNumCompte() == numCompte) {
+				compte = this.listeCompte.get(i); 
+			}
+		}
+		return compte; 
+	}
 }
