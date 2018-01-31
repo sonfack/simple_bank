@@ -45,6 +45,16 @@ public class Banque {
 		 return type; 
 	 }
 	 
+	 public Client getClient(int idClient) {
+		 Client client = null ; 
+		 for(Client clts:this.listeClient) {
+				if(clts.getIdClient() == idClient ) {
+					client = clts;
+				}
+			}
+		 return client;
+	 }
+	 
 	/**
 	 * @return the listeTypeTransaction
 	 */
