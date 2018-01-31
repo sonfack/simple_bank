@@ -25,8 +25,13 @@ public class Compte{
 		this.numCompte = ncompte;
 		this.solde = 0;
 		this.tauxInteret = 0;
-		//this.listeTransaction =  null; 
 		client.listeCompte.add(this);
+	}
+	
+	public void printListeTransaction() {
+		 for (int i = 0; i < this.getListeTransaction().size(); i++) { 		      
+	          System.out.println(this.getListeTransaction().get(i).getMontantTransaction()); 		
+	      } 
 	}
 	
 	/*

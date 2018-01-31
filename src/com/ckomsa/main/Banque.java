@@ -35,6 +35,16 @@ public class Banque {
 		 return this.listeTypeTransaction; 
 	 }
 	 
+	 public TypeTransaction getTypeTransaction(String nomTypeTransaction) {
+		 TypeTransaction type = null;
+		 for(TypeTransaction trs:this.listeTypeTransaction) {
+				if(trs.getTypeTransaction().equals(nomTypeTransaction)) {
+					type = trs;
+				}
+			}
+		 return type; 
+	 }
+	 
 	/**
 	 * @return the listeTypeTransaction
 	 */
@@ -83,6 +93,9 @@ public class Banque {
 	 * Constructeur de la classe banque
 	 */
 	public Banque() {
+		TypeTransaction typetransaction1 = new TypeTransaction(this, "depot");
+		TypeTransaction typetransaction2 = new TypeTransaction(this, "retrait");
+		this.printListeTypeTransaction();
 		
 	}
 
@@ -93,7 +106,9 @@ public class Banque {
 	 */
 	public static void main(String[] args) {
 		Banque BIDV  = new Banque();
-		Menu MenuBanque = Menu.getInstanceMenu(BIDV);
+		// TypeTransaction  typeTransaction  = 
+		//System.out.println(BIDV.getTypeTransaction("depot").getTypeTransaction());
+		Menu MenuBanque = Menu.getInstanceMenu(BIDV," ");
 		Scanner sc =new Scanner(System.in);
 		int choix = sc.nextInt(); 
 		while(choix != 0) {
@@ -111,7 +126,7 @@ public class Banque {
 						break;
 					}
 					case 3 : {
-						MenuBanque.MenuTransaction(BIDV);
+						//MenuBanque.MenuTransaction(BIDV);
 						break; 
 					}
 					default :{
@@ -120,14 +135,15 @@ public class Banque {
 				
 				}
 				
-				System.out.print("votre choix est : ");
+				MenuBanque = Menu.getInstanceMenu(BIDV, " ");
 				choix = sc.nextInt(); 
 			}
 		}
 		
 		
-		/*
-		 * TypeTransaction tr1 = new TypeTransaction(BIDV, "depot"); 
+	
+		 /*
+		  * * TypeTransaction tr1 = new TypeTransaction(BIDV, "depot"); 
 		TypeTransaction tr2 = new TypeTransaction(BIDV, "retrait"); 
 		BIDV.printListeTypeTransaction();
 		System.out.println("/////////");

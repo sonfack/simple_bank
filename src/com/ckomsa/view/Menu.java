@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import com.ckomsa.controller.Client;
 import com.ckomsa.controller.Compte;
+import com.ckomsa.controller.Transaction;
+import com.ckomsa.controller.TypeTransaction;
 import com.ckomsa.main.Banque;
 
 public class Menu {
@@ -17,11 +19,12 @@ public class Menu {
 		System.out.println("########## Menu Principal - Entrez votre choix ##########");
 		System.out.println("#### Entrez 1 pour rechercher "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
-		System.out.println("#### Entrez 2 pour une transaction"); 
+		System.out.println("#### Entrez 2 pour nouvelle transaction"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
+		Menu.menuInstance = this;
 	}
 	
-	protected Menu(Banque banque, String message) {
+	protected void mainMenu(String message) {
 		this.ClearScreen();
 		System.out.println("---------------------------------------------------------");
 		System.out.println(message);
@@ -29,13 +32,15 @@ public class Menu {
 		System.out.println("########## Menu Principal - Entrez votre choix ##########");
 		System.out.println("#### Entrez 1 pour rechercher "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
-		System.out.println("#### Entrez 2 pour une transaction"); 
+		System.out.println("#### Entrez 2 pour nouvelle transaction"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
 	}
 	
-	public static Menu getInstanceMenu(Banque banque) {
+	public static  Menu getInstanceMenu(Banque banque, String message) {
 		if(menuInstance == null) {
 			menuInstance = new Menu(banque); 
+		}else {
+			menuInstance.mainMenu(message);
 		}
 		return menuInstance; 
 	}
@@ -76,22 +81,32 @@ public class Menu {
 		idCompte = donnee.nextInt(); 
 		client1 =  new Client(banque, nom, idClient);
 		compte = new Compte(client1, idCompte); 
-		this.MenuTransaction(banque);
+		client1.printCompteClient();
+		this.MenuTransaction(banque, client1, compte);
 	}
 	
-	public void MenuTransaction(Banque banque) {
+	public void MenuTransaction(Banque banque, Client client , Compte compte) {
 		this.ClearScreen();
 		Scanner sc =new Scanner(System.in);
-		int choix ; 
+		int choix ;
+		double montant ;
+		String nomTypeTransaction ; 
+		TypeTransaction typeTransaction ;
 		//int choix = sc.nextInt(); 
 		System.out.println("###### Menu Transaction - Entrez votre choix ######");
 		System.out.println("Entrez 1 pour depot  "); 
 		System.out.println("Entrez 2 pour retrait");	
-		System.out.println("#### 0 pour sortir de l'application ####");
+		System.out.println("#### 0 pour sortir du menu ####");
 		choix = sc.nextInt();
 		switch(choix) {
 			case 1 : {
-				System.out.println("depot");
+				System.out.println("Depot");
+				nomTypeTransaction = "depot";
+				typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
+				System.out.print("Entrez montant de la transation : ");
+				montant =  sc.nextDouble() ;
+				Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
+				compte.printListeTransaction();
 				break; 
 			}
 			case 2 : {

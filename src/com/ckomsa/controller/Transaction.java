@@ -47,7 +47,7 @@ public class Transaction {
 				// ajout de la transaction dans le compte
 				compte.getListeTransaction().add(this); 
 				compte.setSolde(compte.getSolde() + montant); 
-				System.out.println(montant+"Transaction OK");
+				System.out.println(montant+" Transaction OK");
 				break; 
 			}
 			
