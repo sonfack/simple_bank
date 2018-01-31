@@ -19,7 +19,7 @@ public class Menu {
 		System.out.println("########## Menu Principal - Entrez votre choix ##########");
 		System.out.println("#### Entrez 1 pour rechercher "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
-		System.out.println("#### Entrez 2 pour nouvelle transaction"); 
+		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
 		Menu.menuInstance = this;
 	}
@@ -32,7 +32,7 @@ public class Menu {
 		System.out.println("########## Menu Principal - Entrez votre choix ##########");
 		System.out.println("#### Entrez 1 pour rechercher "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
-		System.out.println("#### Entrez 2 pour nouvelle transaction"); 
+		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
 	}
 	

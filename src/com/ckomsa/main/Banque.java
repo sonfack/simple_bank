@@ -47,11 +47,12 @@ public class Banque {
 	 
 	 public Client getClient(int idClient) {
 		 Client client = null ; 
-		 for(Client clts:this.listeClient) {
-				if(clts.getIdClient() == idClient ) {
-					client = clts;
-				}
-			}
+		 for(Client clt:this.listeClient) {
+			 if(clt.getIdClient() == idClient) {
+				 client = clt; 
+			 }
+		 }
+		
 		 return client;
 	 }
 	 
@@ -59,18 +60,14 @@ public class Banque {
 	 * @return the listeTypeTransaction
 	 */
 	public void setListeClient(Client client) {
-		Iterator<Client> iteratorClient = this.listeClient.iterator(); 
-		boolean exist = false; 
-		int count = 1; 
-		while(iteratorClient.hasNext() && !exist) {
-			if(iteratorClient.next().getIdClient() == client.getIdClient()  && 
-					iteratorClient.next().nomClient.equals(client.nomClient)){
-						exist = true; 
-					}
-			count = count +1; 
+		int count = 0; 
+		for(Client clt:this.listeClient) {
+			if(clt.getIdClient() != client.getIdClient()) {
+				count ++; 
+			}
 		}
-		if(count < this.listeClient.size()) {
-			System.out.println(client.nomClient+"existe deja et a pour identifiant"+client.getIdClient());
+		if(count >= this.listeClient.size()) {
+			this.listeClient.add(client); 
 		}
 	}
 
@@ -115,9 +112,26 @@ public class Banque {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Banque BIDV  = new Banque();
+		
 		// TypeTransaction  typeTransaction  = 
 		//System.out.println(BIDV.getTypeTransaction("depot").getTypeTransaction());
+		
+		
+	
+		//BIDV.printListeClient();
+		//BIDV.getClient(1);
+		/*
+		 * Client clt = new Client(BIDV, "serge0", 1);
+		Client clt1 = new Client(BIDV, "serge1", 1);
+		Client clt2 = new Client(BIDV, "serge2", 6);
+		Client clt3 = new Client(BIDV, "serge3", 5);
+		Client clt4 = new Client(BIDV, "serge4", 2);
+		Client clt5 = new Client(BIDV, "serge5", 3);
+		Client clt6 = new Client(BIDV, "serge6", 4);
+		Compte cpt = new Compte(clt, 122); 
+		System.out.println("///////////////////////////");
+		 */ 
+		Banque BIDV  = new Banque();
 		Menu MenuBanque = Menu.getInstanceMenu(BIDV," ");
 		Scanner sc =new Scanner(System.in);
 		int choix = sc.nextInt(); 
