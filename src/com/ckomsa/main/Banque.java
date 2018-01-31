@@ -118,19 +118,19 @@ public class Banque {
 			}else {
 				switch(choix) {
 					case 1 : {
-						MenuBanque.MenuRecherche(BIDV);	
+						MenuBanque.menuRecherche(BIDV);	
 						break; 
 					}
 					case 2 : {
-						MenuBanque.MenuCreerCompte(BIDV);
+						MenuBanque.menuCreerCompte(BIDV);
 						break;
 					}
 					case 3 : {
-						//MenuBanque.MenuTransaction(BIDV);
+						MenuBanque.menuTransaction(BIDV);
 						break; 
 					}
 					default :{
-						MenuBanque.MessageErreur();
+						MenuBanque.messageErreur();
 					}
 				
 				}

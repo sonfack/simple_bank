@@ -54,7 +54,7 @@ public class Menu {
 		}
 	}  
 	
-	public void MenuRecherche(Banque banque) {
+	public void menuRecherche(Banque banque) {
 		this.ClearScreen();
 		System.out.println("Menu Recherche - Entrez votre choix");
 		System.out.println("Entrez 1 pour recherche par nom  "); 
@@ -62,7 +62,7 @@ public class Menu {
 		System.out.println("#### 0 pour sortir de l'application ####");
 	}
 	
-	public void MenuCreerCompte(Banque banque) {
+	public void menuCreerCompte(Banque banque) {
 		this.ClearScreen();
 		Scanner donnee =new Scanner(System.in);
 		String nom ; 
@@ -82,10 +82,37 @@ public class Menu {
 		client1 =  new Client(banque, nom, idClient);
 		compte = new Compte(client1, idCompte); 
 		client1.printCompteClient();
-		this.MenuTransaction(banque, client1, compte);
+		this.menuTransaction(banque, client1, compte);
 	}
 	
-	public void MenuTransaction(Banque banque, Client client , Compte compte) {
+	
+	public void menuTransaction(Banque banque) {
+		Scanner sc =new Scanner(System.in);
+		int idClient ;
+		String message ; 
+		System.out.println("###### Menu Transaction - Entrez votre choix ######");
+		System.out.print("Entrez l'identifiant du client :");
+		idClient = sc.nextInt();
+		Client client = banque.getClient(idClient);
+		if( client != null) {
+			System.out.print("Entrez le numero de compte : ");
+			int numCompte ; 
+			numCompte = sc.nextInt(); 
+			Compte compte = client.getCompte(numCompte); 
+			if(compte != null) {
+				this.menuTransaction(banque,client, compte);
+			}else {
+				message = " Le compte de numero "+numCompte+"n'existe pas"; 
+				this.mainMenu(message);
+			}
+		}else {
+			message = "Le client d'Id "+idClient+" n'existe pas"; 
+			this.mainMenu(message);
+		}
+		
+	}
+	
+	public void menuTransaction(Banque banque, Client client , Compte compte) {
 		this.ClearScreen();
 		Scanner sc =new Scanner(System.in);
 		int choix ;
@@ -114,13 +141,13 @@ public class Menu {
 				break ; 
 			}
 			default: {
-				this.MessageErreur();
+				this.messageErreur();
 			}
 		}
 	}
 	
 	
-	public void MessageErreur() {
+	public void messageErreur() {
 		this.ClearScreen();
 		System.out.println("Votre choix n est pas bon");
 	}
