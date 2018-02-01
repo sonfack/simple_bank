@@ -55,6 +55,12 @@ public class Transaction {
 		
 	}
 	
+	public String getNomTypeTransaction() {
+		String nomTypeTransaction ; 
+		nomTypeTransaction = this.typeTransaction.getTypeTransaction(); 
+		return nomTypeTransaction; 
+	}
+	
 	public Date getDateTransaction() {
 		return this.dateTransation; 
 	}

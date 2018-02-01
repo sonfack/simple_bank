@@ -17,7 +17,7 @@ public class Menu {
 		// TODO Auto-generated constructor stub
 		this.ClearScreen();
 		System.out.println("########## Menu Principal - Entrez votre choix ##########");
-		System.out.println("#### Entrez 1 pour rechercher "); 
+		System.out.println("#### Entrez 1 pour consulter un solde "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
 		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
@@ -30,7 +30,7 @@ public class Menu {
 		System.out.println(message);
 		System.out.println("---------------------------------------------------------");
 		System.out.println("########## Menu Principal - Entrez votre choix ##########");
-		System.out.println("#### Entrez 1 pour rechercher "); 
+		System.out.println("#### Entrez 1 pour consulter un solde "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
 		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
@@ -54,13 +54,31 @@ public class Menu {
 		}
 	}  
 	
-	public void menuRecherche(Banque banque) {
+	public void menuConsulteSolde(Banque banque) {
 		this.ClearScreen();
-		System.out.println("Menu Recherche - Entrez votre choix");
-		System.out.println("Entrez 1 pour recherche par nom  "); 
-		System.out.println("Entrez 2 pour recherche par identifiant");	
-		System.out.println("#### 0 pour sortir de l'application ####");
+		System.out.println("Menu consulter solder"); 
+		System.out.print("Entrez l'identifiant du client: ");	
+		//System.out.println("#### 0 pour sortir de l'application ####");
+		Scanner donnee =new Scanner(System.in);
+		int idClient = donnee.nextInt();
+		Client client =  banque.getClient(idClient); 
+		if(client != null) {
+			System.out.print("Entrez numero du compte: ");
+			int numCompte = donnee.nextInt();
+			Compte compte = client.getCompte(numCompte); 
+			if(compte != null) {
+				System.out.println("----Le solde est de "+compte.getSolde()+"----");
+			}else {
+				String message  = "---Ce compte n'existe pas----"; 
+				Menu.getInstanceMenu(banque, message);
+			}
+		}else {
+			String message  = "---Ce client n'existe pas----"; 
+			Menu.getInstanceMenu(banque, message);
+		}
 	}
+	
+	
 	
 	public void menuCreerCompte(Banque banque) {
 		this.ClearScreen();
@@ -127,17 +145,22 @@ public class Menu {
 		choix = sc.nextInt();
 		switch(choix) {
 			case 1 : {
-				System.out.println("Depot");
+			
 				nomTypeTransaction = "depot";
 				typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
-				System.out.print("Entrez montant de la transation : ");
+				System.out.print("Entrez montant du depot: ");
 				montant =  sc.nextDouble() ;
 				Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
 				compte.printListeTransaction();
 				break; 
 			}
 			case 2 : {
-				System.out.println("retrait");
+				nomTypeTransaction = "retrait";
+				typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
+				System.out.print("Entrez montant du retrait : ");
+				montant =  sc.nextDouble() ;
+				Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
+				compte.printListeTransaction();
 				break ; 
 			}
 			default: {

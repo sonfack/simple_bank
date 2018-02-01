@@ -101,9 +101,7 @@ public class Banque {
 	 */
 	public Banque() {
 		TypeTransaction typetransaction1 = new TypeTransaction(this, "depot");
-		TypeTransaction typetransaction2 = new TypeTransaction(this, "retrait");
-		this.printListeTypeTransaction();
-		
+		TypeTransaction typetransaction2 = new TypeTransaction(this, "retrait");	
 	}
 
 	
@@ -142,7 +140,7 @@ public class Banque {
 			}else {
 				switch(choix) {
 					case 1 : {
-						MenuBanque.menuRecherche(BIDV);	
+						MenuBanque.menuConsulteSolde(BIDV);	
 						break; 
 					}
 					case 2 : {

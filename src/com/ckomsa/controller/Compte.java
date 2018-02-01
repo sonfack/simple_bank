@@ -30,9 +30,19 @@ public class Compte{
 	
 	public void printListeTransaction() {
 		 for (int i = 0; i < this.getListeTransaction().size(); i++) { 		      
-	          System.out.println(this.getListeTransaction().get(i).getMontantTransaction()); 		
+	          System.out.println("----"+this.getListeTransaction().get(i).getNomTypeTransaction()+" montant de "+this.getListeTransaction().get(i).getMontantTransaction()+" pour le compte "+this.getNumCompte()+" au "+this.getListeTransaction().get(i).getDateTransaction()+"----"); 		
 	      } 
 	}
+	
+	
+	public void printListeTransaction(String nomTypeTransaction) {
+		 for (int i = 0; i < this.getListeTransaction().size(); i++) {
+			 if(nomTypeTransaction.equals(this.getListeTransaction().get(i).getNomTypeTransaction())) {
+				 System.out.println("----"+this.getListeTransaction().get(i).getNomTypeTransaction()+" montant de "+this.getListeTransaction().get(i).getMontantTransaction()+" pour le compte "+this.getNumCompte()+" au "+this.getListeTransaction().get(i).getDateTransaction()+"----");
+			 }
+	     } 
+	}
+	
 	
 	/*
 	 * Cette fonction returne la liste des transaction d'un compte
