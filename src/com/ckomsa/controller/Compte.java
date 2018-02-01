@@ -28,6 +28,13 @@ public class Compte{
 		client.listeCompte.add(this);
 	}
 	
+	public Compte(Client client,  int ncompte, int taux ) {
+		this.numCompte = ncompte;
+		this.solde = 0;
+		this.tauxInteret = taux;
+		client.listeCompte.add(this);
+	}
+	
 	public void printListeTransaction() {
 		 for (int i = 0; i < this.getListeTransaction().size(); i++) { 		      
 	          System.out.println("----"+this.getListeTransaction().get(i).getNomTypeTransaction()+" montant de "+this.getListeTransaction().get(i).getMontantTransaction()+" pour le compte "+this.getNumCompte()+" au "+this.getListeTransaction().get(i).getDateTransaction()+"----"); 		

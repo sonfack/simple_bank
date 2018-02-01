@@ -20,6 +20,7 @@ public class Menu {
 		System.out.println("#### Entrez 1 pour consulter un solde "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
 		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
+		System.out.println("#### Entrez 4 pour calculer l'interet"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
 		Menu.menuInstance = this;
 	}
@@ -33,6 +34,7 @@ public class Menu {
 		System.out.println("#### Entrez 1 pour consulter un solde "); 
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
 		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
+		System.out.println("#### Entrez 4 pour calculer l'interet");
 		System.out.println("#### 0 pour sortir de l'application ####");
 	}
 	
@@ -79,6 +81,11 @@ public class Menu {
 	}
 	
 	
+	public void menuCalculateInteret(Banque banque) {
+		banque.calculateInteret();
+	}
+	
+	
 	
 	public void menuCreerCompte(Banque banque) {
 		this.ClearScreen();
@@ -86,6 +93,7 @@ public class Menu {
 		String nom ; 
 		int idClient ;
 		int idCompte; 
+		int taux ; 
 		Client client1; 
 		Compte compte ; 
 		System.out.println("Menu Creer compte");
@@ -97,8 +105,11 @@ public class Menu {
 		System.out.println(" ");
 		System.out.print("Entrer l'identifiant du compte : ");
 		idCompte = donnee.nextInt(); 
+		System.out.println(" ");
+		System.out.print("Entrez le taux : ");
+		taux = donnee.nextInt(); 
 		client1 =  new Client(banque, nom, idClient);
-		compte = new Compte(client1, idCompte); 
+		compte = new Compte(client1, idCompte, taux); 
 		client1.printCompteClient();
 		this.menuTransaction(banque, client1, compte);
 	}

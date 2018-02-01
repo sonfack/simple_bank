@@ -80,6 +80,21 @@ public class Banque {
 		
 	}
 	
+	/*
+	 * Calcul d'interet
+	 */
+	public void calculateInteret() {
+		 for(Client clt:this.listeClient) {
+			 System.out.println("Client : "+clt.nomClient);
+			 for(int i = 0 ; i < clt.listeCompte.size() ; i++) {
+				 	System.out.println("Numero de complte"+clt.listeCompte.get(i).getNumCompte());
+				 	System.out.println("----Solde : "+clt.listeCompte.get(i).getSolde()+"----");
+					clt.listeCompte.get(i).setSolde((clt.listeCompte.get(i).getTaux()*clt.listeCompte.get(i).getSolde())/100 + clt.listeCompte.get(i).getSolde());
+					System.out.println("----Nouveau solde : "+clt.listeCompte.get(i).getSolde()+"  pour Interet : "+clt.listeCompte.get(i).getTaux()+" ----");
+			 }
+			 System.out.println("----------------------------------------------------------");
+		 }
+	}
 	
 	/*
 	 * 
@@ -149,6 +164,10 @@ public class Banque {
 					}
 					case 3 : {
 						MenuBanque.menuTransaction(BIDV);
+						break; 
+					}
+					case 4 : {
+						MenuBanque.menuCalculateInteret(BIDV);
 						break; 
 					}
 					default :{
