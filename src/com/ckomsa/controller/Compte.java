@@ -11,6 +11,7 @@ import java.util.List;
  *
  */
 public class Compte{
+	public static int indiceCompte  = 0;  
 	// liste des transactions du compte
 	ArrayList<Transaction> listeTransaction = new ArrayList<Transaction>(); 
 	private Client client;
@@ -21,17 +22,21 @@ public class Compte{
 	/*
 	 * Constructeur de la classe Compte qui permet de créer un compte sans transaction
 	 */
-	public Compte(Client client,  int ncompte ) {
-		this.numCompte = ncompte;
+	
+	public Compte(Client client, int taux ) {
+		Compte.indiceCompte = Compte.indiceCompte + 1; 
+		this.numCompte = Compte.indiceCompte ;
 		this.solde = 0;
-		this.tauxInteret = 0;
+		this.tauxInteret = taux;
 		client.listeCompte.add(this);
 	}
 	
-	public Compte(Client client,  int ncompte, int taux ) {
-		this.numCompte = ncompte;
+	
+	public Compte(Client client) {
+		Compte.indiceCompte = Compte.indiceCompte + 1; 
+		this.numCompte = Compte.indiceCompte ;
 		this.solde = 0;
-		this.tauxInteret = taux;
+		this.tauxInteret = 0;
 		client.listeCompte.add(this);
 	}
 	

@@ -69,13 +69,13 @@ public class Menu {
 			int numCompte = donnee.nextInt();
 			Compte compte = client.getCompte(numCompte); 
 			if(compte != null) {
-				System.out.println("----Le solde est de "+compte.getSolde()+"----");
+				System.out.println("----Le solde est de "+compte.getSolde()+" ----");
 			}else {
-				String message  = "---Ce compte n'existe pas----"; 
+				String message  = "----Ce compte n'existe pas----"; 
 				Menu.getInstanceMenu(banque, message);
 			}
 		}else {
-			String message  = "---Ce client n'existe pas----"; 
+			String message  = "----Ce client n'existe pas----"; 
 			Menu.getInstanceMenu(banque, message);
 		}
 	}
@@ -87,7 +87,7 @@ public class Menu {
 	
 	
 	
-	public void menuCreerCompte(Banque banque) {
+	public void subMenuCreerNouveauClientCompte(Banque banque) {
 		this.ClearScreen();
 		Scanner donnee =new Scanner(System.in);
 		String nom ; 
@@ -103,17 +103,57 @@ public class Menu {
 		System.out.print("Entrer l'identifiant : ");
 		idClient = donnee.nextInt(); 
 		System.out.println(" ");
-		System.out.print("Entrer l'identifiant du compte : ");
-		idCompte = donnee.nextInt(); 
+		//System.out.print("Entrer l'identifiant du compte : ");
+		//idCompte = donnee.nextInt(); 
 		System.out.println(" ");
 		System.out.print("Entrez le taux : ");
 		taux = donnee.nextInt(); 
 		client1 =  new Client(banque, nom, idClient);
-		compte = new Compte(client1, idCompte, taux); 
+		compte = new Compte(client1, taux); 
 		client1.printCompteClient();
 		this.menuTransaction(banque, client1, compte);
 	}
 	
+	public void subMenuCreerNouveauCompte(Banque banque) {
+		Scanner donnee =new Scanner(System.in);
+		int idClient ; 
+		int taux;
+		Compte compte ; 
+		Client client1; 
+		System.out.print("Entrer l'identifiant : ");
+		idClient = donnee.nextInt(); 
+		System.out.println(" ");
+		System.out.print("Entrer l'identifiant du compte : "); 
+		System.out.println(" ");
+		System.out.print("Entrez le taux : ");
+		taux = donnee.nextInt(); 
+		client1 = banque.getClient(idClient);
+		compte = new Compte(client1, taux); 
+		client1.printCompteClient();
+		this.menuTransaction(banque, client1, compte);
+	}
+	
+	public void menuCreerCompte(Banque banque) {
+		System.out.println("###### Sous Menu Creer Compte - Entrez votre choix ######");
+		System.out.println("###### Entrez 1 pour compte inexistant");
+		System.out.println("###### Entrez 2 pour compte existant");
+		Scanner sc = new Scanner(System.in); 
+		int choix ;
+		choix = sc.nextInt(); 
+		switch(choix) {
+			case 1 : {
+				this.subMenuCreerNouveauClientCompte(banque);
+				break ; 
+			}
+			case 2 : {
+				this.subMenuCreerNouveauCompte(banque);
+				break; 
+			}
+			default: {
+				this.messageErreur();
+			}
+		}
+	}
 	
 	public void menuTransaction(Banque banque) {
 		Scanner sc =new Scanner(System.in);
