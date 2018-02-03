@@ -12,7 +12,7 @@ import com.ckomsa.main.Banque;
  *
  */
 public class Client {
-	
+	public static int indiceClient=0 ; 
 	public String nomClient ; 
 	private int idClient;
 	
@@ -26,6 +26,15 @@ public class Client {
 		this.nomClient = nom.toUpperCase(); 
 		this.idClient = id ; 
 		banque.setListeClient(this);
+	}
+	
+	public Client(Banque banque, String nom) {
+		// TODO Auto-generated constructor stub
+		Client.indiceClient = Client.indiceClient +1; 
+		this.nomClient = nom.toUpperCase(); 
+		this.idClient = Client.indiceClient ; 
+		banque.setListeClient(this);
+		System.out.println("\n---- OK Client : "+this.nomClient+" identifiant : "+this.idClient+" ----\n" );
 	}
 	
 	
@@ -42,8 +51,9 @@ public class Client {
 	}
 	
 	public void printCompteClient() {
+		System.out.println("---- Le client : "+this.nomClient+" pour Id : "+this.getIdClient()+" dispose des comptes suivants: ----" );
 		for(int i = 0 ; i < this.listeCompte.size() ; i++) {
-			System.out.println(this.listeCompte.get(i).getNumCompte());
+			System.out.println("* compte "+i+1+" pour numero de compte: "+this.listeCompte.get(i).getNumCompte());
 		}
 	}
 	

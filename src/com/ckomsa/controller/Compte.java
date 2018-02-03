@@ -29,6 +29,7 @@ public class Compte{
 		this.solde = 0;
 		this.tauxInteret = taux;
 		client.listeCompte.add(this);
+		System.out.println("\n---- OK Compte : "+this.numCompte+" taux : "+this.tauxInteret+"  client : "+client.nomClient+"----\n" );
 	}
 	
 	
@@ -38,7 +39,10 @@ public class Compte{
 		this.solde = 0;
 		this.tauxInteret = 0;
 		client.listeCompte.add(this);
+		System.out.println("\n---- OK Compte : "+this.numCompte+" taux : "+this.tauxInteret+"  client : "+client.nomClient+"----\n" );
+
 	}
+	
 	
 	public void printListeTransaction() {
 		 for (int i = 0; i < this.getListeTransaction().size(); i++) { 		      

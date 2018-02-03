@@ -5,6 +5,7 @@ package com.ckomsa.main;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -145,45 +146,68 @@ public class Banque {
 		System.out.println("///////////////////////////");
 		 */ 
 		Banque BIDV  = new Banque();
-		Menu MenuBanque = Menu.getInstanceMenu(BIDV," ");
-		Scanner sc =new Scanner(System.in);
-		int choix = sc.nextInt(); 
-		while(choix != 0) {
-			if(choix < 0) {
-			// choix negatif 	
-				
-			}else {
-				switch(choix) {
-					case 1 : {
-						MenuBanque.menuConsulteSolde(BIDV);	
-						break; 
+		boolean fin = true;
+		do {
+			Menu MenuBanque = Menu.getInstanceMenu(BIDV," ");
+			Scanner sc =new Scanner(System.in);
+			try {
+				int choix = sc.nextInt(); 
+				if(choix < 0) {
+					// choix negatif 	
+					System.out.println("---- Votre choix doit etre un entier positif ----");
+					}else if(choix > 0) {
+						switch(choix) {
+							case 1 : {
+								MenuBanque.menuConsulteSolde(BIDV);	
+								break; 
+							}
+							case 2 : {
+								MenuBanque.menuCreerCompte(BIDV);
+								break;
+							}
+							case 3 : {
+								MenuBanque.menuTransaction(BIDV);
+								break; 
+							}
+							case 4 : {
+								MenuBanque.menuCalculateInteret(BIDV);
+								break; 
+							}
+							default :{
+								MenuBanque.messageErreur();
+							}
+						
+						}
+						
+						//MenuBanque = Menu.getInstanceMenu(BIDV, " ");
+						//choix = sc.nextInt(); 
+					}else if(choix == 0) {
+						fin = false; 
 					}
-					case 2 : {
-						MenuBanque.menuCreerCompte(BIDV);
-						break;
-					}
-					case 3 : {
-						MenuBanque.menuTransaction(BIDV);
-						break; 
-					}
-					case 4 : {
-						MenuBanque.menuCalculateInteret(BIDV);
-						break; 
-					}
-					default :{
-						MenuBanque.messageErreur();
-					}
-				
-				}
-				
-				MenuBanque = Menu.getInstanceMenu(BIDV, " ");
-				choix = sc.nextInt(); 
+			}catch(InputMismatchException e) {
+				System.out.println("---- Votre choix doit etre un entier ----");
 			}
+			
+		}while(fin);
+		BIDV.printListeClient();
+		System.out.println("Programme termine");
+		System.exit(0);
+			
+		 /*try {
+			
+			
+			
+			while(choix != 0) {
+				
+			}
+			BIDV.printListeClient();
+			System.out.println("Programme termine");
+			System.exit(0);
+		}catch(InputMismatchException e) {
+			System.out.println("---- Votre choix doit etre un entier ----");
 		}
-		
-		
 	
-		 /*
+		
 		  * * TypeTransaction tr1 = new TypeTransaction(BIDV, "depot"); 
 		TypeTransaction tr2 = new TypeTransaction(BIDV, "retrait"); 
 		BIDV.printListeTypeTransaction();
@@ -205,9 +229,7 @@ public class Banque {
 		Client clt3 = new Client(BIDV, "sylvain", 23); 
 		
 		 */
-		BIDV.printListeClient();
-		System.out.println("Programme termine");
-		System.exit(0);
+		
 	}
 
 }

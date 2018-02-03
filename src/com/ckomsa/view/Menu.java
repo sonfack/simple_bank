@@ -1,6 +1,7 @@
 package com.ckomsa.view;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.ckomsa.controller.Client;
@@ -58,25 +59,37 @@ public class Menu {
 	
 	public void menuConsulteSolde(Banque banque) {
 		this.ClearScreen();
-		System.out.println("Menu consulter solder"); 
-		System.out.print("Entrez l'identifiant du client: ");	
-		//System.out.println("#### 0 pour sortir de l'application ####");
-		Scanner donnee =new Scanner(System.in);
-		int idClient = donnee.nextInt();
-		Client client =  banque.getClient(idClient); 
-		if(client != null) {
-			System.out.print("Entrez numero du compte: ");
-			int numCompte = donnee.nextInt();
-			Compte compte = client.getCompte(numCompte); 
-			if(compte != null) {
-				System.out.println("----Le solde est de "+compte.getSolde()+" ----");
+		try {
+			System.out.println("Menu consulter solder"); 
+			System.out.print("Entrez l'identifiant du client: ");	
+			//System.out.println("#### 0 pour sortir de l'application ####");
+			Scanner donnee =new Scanner(System.in);
+			int idClient = donnee.nextInt();
+			Client client =  banque.getClient(idClient); 
+			if(client != null) {
+				System.out.print("Entrez numero du compte: ");
+				try {
+					int numCompte = donnee.nextInt();
+					Compte compte = client.getCompte(numCompte); 
+					if(compte != null) {
+						System.out.println("----Solde : "+compte.getSolde()+" client : "+client.nomClient+" ----");
+					}else {
+						String message  = "---- Compte n'existe pas ----"; 
+						System.out.print(message);
+						//mainMenu(message);
+					}
+				}catch(InputMismatchException e) {
+					donnee.nextLine() ; 
+					System.out.println("---- Numero compte doit etre entier ----");
+				}
+				
 			}else {
-				String message  = "----Ce compte n'existe pas----"; 
-				Menu.getInstanceMenu(banque, message);
+				String message  = "----Client n'existe pas ----"; 
+				System.out.print(message);
+				//mainMenu(message);
 			}
-		}else {
-			String message  = "----Ce client n'existe pas----"; 
-			Menu.getInstanceMenu(banque, message);
+		}catch(InputMismatchException e) {
+			String message  = "----Client n'existe pas ----"; 
 		}
 	}
 	
@@ -96,46 +109,59 @@ public class Menu {
 		int taux ; 
 		Client client1; 
 		Compte compte ; 
-		System.out.println("Menu Creer compte");
-		System.out.print("Entrer le nom :  "); 
-		nom = donnee.nextLine();
-		System.out.println(" ");
-		System.out.print("Entrer l'identifiant : ");
-		idClient = donnee.nextInt(); 
-		System.out.println(" ");
-		//System.out.print("Entrer l'identifiant du compte : ");
-		//idCompte = donnee.nextInt(); 
-		System.out.println(" ");
-		System.out.print("Entrez le taux : ");
-		taux = donnee.nextInt(); 
-		client1 =  new Client(banque, nom, idClient);
-		compte = new Compte(client1, taux); 
-		client1.printCompteClient();
-		this.menuTransaction(banque, client1, compte);
+		
+		try {
+			System.out.println("\nMenu Creer nouveau client et compte\n");
+			System.out.print("Entrer le nom :  "); 
+			nom = donnee.nextLine();
+			try {
+				System.out.println(" ");
+				System.out.print("Entrez le taux : ");
+				taux = donnee.nextInt(); 
+				client1 =  new Client(banque, nom);
+				compte = new Compte(client1, taux); 
+				client1.printCompteClient();
+				this.menuTransaction(banque, client1, compte);
+			}catch(InputMismatchException e) {
+				System.out.println("---- Taux doit etre un entier ----");
+			}
+			
+		}catch(InputMismatchException e) {
+			System.out.println("---- Nom doit etre une chaine ----");
+		}
+		
 	}
 	
 	public void subMenuCreerNouveauCompte(Banque banque) {
+		System.out.println("\nMenu Creer compte client existant\n");
 		Scanner donnee =new Scanner(System.in);
 		int idClient ; 
 		int taux;
 		Compte compte ; 
 		Client client1; 
-		System.out.print("Entrer l'identifiant : ");
-		idClient = donnee.nextInt(); 
-		System.out.println(" ");
-		System.out.print("Entrer l'identifiant du compte : "); 
-		System.out.println(" ");
-		System.out.print("Entrez le taux : ");
-		taux = donnee.nextInt(); 
-		client1 = banque.getClient(idClient);
-		compte = new Compte(client1, taux); 
-		client1.printCompteClient();
-		this.menuTransaction(banque, client1, compte);
+		try {
+			System.out.print("Entrer l'identifiant client : ");
+			idClient = donnee.nextInt();  
+			client1 = banque.getClient(idClient);
+			if(client1 != null) {
+				System.out.println(" ");
+				System.out.print("Entrez le taux : ");
+				taux = donnee.nextInt();
+				compte = new Compte(client1, taux); 
+				client1.printCompteClient();
+				this.menuTransaction(banque, client1, compte);
+			}else {
+				System.out.println("---- Client n'existe pas ----");
+			}
+			
+		}catch(InputMismatchException e) {
+			System.out.println("---- Identifiant client et aux doivent etre un entier ----");
+		}
 	}
 	
 	public void menuCreerCompte(Banque banque) {
 		System.out.println("###### Sous Menu Creer Compte - Entrez votre choix ######");
-		System.out.println("###### Entrez 1 pour compte inexistant");
+		System.out.println("###### Entrez 1 pour nouveau compte");
 		System.out.println("###### Entrez 2 pour compte existant");
 		Scanner sc = new Scanner(System.in); 
 		int choix ;
@@ -159,26 +185,30 @@ public class Menu {
 		Scanner sc =new Scanner(System.in);
 		int idClient ;
 		String message ; 
-		System.out.println("###### Menu Transaction - Entrez votre choix ######");
-		System.out.print("Entrez l'identifiant du client :");
-		idClient = sc.nextInt();
-		Client client = banque.getClient(idClient);
-		if( client != null) {
-			System.out.print("Entrez le numero de compte : ");
-			int numCompte ; 
-			numCompte = sc.nextInt(); 
-			Compte compte = client.getCompte(numCompte); 
-			if(compte != null) {
-				this.menuTransaction(banque,client, compte);
+		try {
+			System.out.println("###### Menu Transaction - Entrez votre choix ######");
+			System.out.print("Entrez l'identifiant du client :");
+			idClient = sc.nextInt();
+			Client client = banque.getClient(idClient);
+			if( client != null) {
+				System.out.print("Entrez le numero de compte : ");
+				int numCompte ; 
+				numCompte = sc.nextInt(); 
+				Compte compte = client.getCompte(numCompte); 
+				if(compte != null) {
+					this.menuTransaction(banque,client, compte);
+				}else {
+					message = "---- Compte numero "+numCompte+" n'existe pas ----"; 
+					this.mainMenu(message);
+				}
 			}else {
-				message = " Le compte de numero "+numCompte+"n'existe pas"; 
+				message = "---- Client d'indentifiant "+idClient+" n'existe pas ----"; 
 				this.mainMenu(message);
 			}
-		}else {
-			message = "Le client d'Id "+idClient+" n'existe pas"; 
-			this.mainMenu(message);
+			
+		}catch(InputMismatchException e) {
+			System.out.println("---- Identifiant client et numero compte aux doivent etre un entier ----");
 		}
-		
 	}
 	
 	public void menuTransaction(Banque banque, Client client , Compte compte) {
@@ -196,22 +226,29 @@ public class Menu {
 		choix = sc.nextInt();
 		switch(choix) {
 			case 1 : {
-			
-				nomTypeTransaction = "depot";
-				typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
-				System.out.print("Entrez montant du depot: ");
-				montant =  sc.nextDouble() ;
-				Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
-				compte.printListeTransaction();
+				try {
+					nomTypeTransaction = "depot";
+					typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
+					System.out.print("Entrez montant du depot: ");
+					montant =  sc.nextDouble() ;
+					Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
+					compte.printListeTransaction();
+				}catch(InputMismatchException e) {
+					System.out.println("---- Montant depot etre un nombre ----");
+				}
 				break; 
 			}
 			case 2 : {
-				nomTypeTransaction = "retrait";
-				typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
-				System.out.print("Entrez montant du retrait : ");
-				montant =  sc.nextDouble() ;
-				Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
-				compte.printListeTransaction();
+				try {
+					nomTypeTransaction = "retrait";
+					typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
+					System.out.print("Entrez montant du retrait : ");
+					montant =  sc.nextDouble() ;
+					Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
+					compte.printListeTransaction();
+				}catch(InputMismatchException e) {
+						System.out.println("---- Montant depot etre un nombre ----");
+				}
 				break ; 
 			}
 			default: {
