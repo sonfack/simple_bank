@@ -59,38 +59,53 @@ public class Menu {
 	
 	public void menuConsulteSolde(Banque banque) {
 		this.ClearScreen();
-		try {
-			System.out.println("Menu consulter solder"); 
-			System.out.print("Entrez l'identifiant du client: ");	
-			//System.out.println("#### 0 pour sortir de l'application ####");
-			Scanner donnee =new Scanner(System.in);
-			int idClient = donnee.nextInt();
-			Client client =  banque.getClient(idClient); 
-			if(client != null) {
-				System.out.print("Entrez numero du compte: ");
-				try {
-					int numCompte = donnee.nextInt();
-					Compte compte = client.getCompte(numCompte); 
-					if(compte != null) {
-						System.out.println("----Solde : "+compte.getSolde()+" client : "+client.nomClient+" ----");
-					}else {
-						String message  = "---- Compte n'existe pas ----"; 
-						System.out.print(message);
-						//mainMenu(message);
-					}
-				}catch(InputMismatchException e) {
-					donnee.nextLine() ; 
-					System.out.println("---- Numero compte doit etre entier ----");
+		if( !banque.getClient().isEmpty()) {
+			try {
+				System.out.println("Menu consulter solder"); 
+				System.out.print("Entrez l'identifiant du client: ");	
+				//System.out.println("#### 0 pour sortir de l'application ####");
+				Scanner donnee =new Scanner(System.in);
+				int idClient = donnee.nextInt();
+				if(idClient > Integer.MAX_VALUE) {
+					 throw new RuntimeException("---- Valeur entree pas correcte ----");
+				}else if(idClient < Integer.MIN_VALUE) {
+					throw new RuntimeException("---- Valeur entree pas correcte ----");
 				}
-				
-			}else {
+				Client client =  banque.getClient(idClient); 
+				if(client != null) {
+					System.out.print("Entrez numero du compte: ");
+					try {
+						int numCompte = donnee.nextInt();
+						if(numCompte > Integer.MAX_VALUE) {
+							 throw new RuntimeException("---- Valeur entree pas correcte ----");
+						}else if(numCompte < Integer.MIN_VALUE) {
+							throw new RuntimeException("---- Valeur entree pas correcte ----");
+						}
+						Compte compte = client.getCompte(numCompte); 
+						if(compte != null) {
+							System.out.println("----Solde : "+compte.getSolde()+" client : "+client.nomClient+" ----");
+						}else {
+							String message  = "---- Compte n'existe pas ----"; 
+							System.out.print(message);
+							//mainMenu(message);
+						}
+					}catch(InputMismatchException e) {
+						donnee.nextLine() ; 
+						System.out.println("---- Numero compte doit etre entier ----");
+					}
+					
+				}else {
+					String message  = "----Client n'existe pas ----"; 
+					System.out.print(message);
+					//mainMenu(message);
+				}
+			}catch(InputMismatchException e) {
 				String message  = "----Client n'existe pas ----"; 
-				System.out.print(message);
-				//mainMenu(message);
 			}
-		}catch(InputMismatchException e) {
-			String message  = "----Client n'existe pas ----"; 
+		}else {
+			System.out.println("---- Aucun client dans la banque ----");
 		}
+		
 	}
 	
 	
@@ -142,11 +157,21 @@ public class Menu {
 		try {
 			System.out.print("Entrer l'identifiant client : ");
 			idClient = donnee.nextInt();  
+			if(idClient > Integer.MAX_VALUE) {
+				 throw new RuntimeException("---- Valeur entree pas correcte ----");
+			}else if(idClient < Integer.MIN_VALUE) {
+				throw new RuntimeException("---- Valeur entree pas correcte ----");
+			}
 			client1 = banque.getClient(idClient);
 			if(client1 != null) {
 				System.out.println(" ");
 				System.out.print("Entrez le taux : ");
 				taux = donnee.nextInt();
+				if(taux > Integer.MAX_VALUE) {
+					 throw new RuntimeException("---- Valeur entree pas correcte ----");
+				}else if(taux < Integer.MIN_VALUE) {
+					throw new RuntimeException("---- Valeur entree pas correcte ----");
+				}
 				compte = new Compte(client1, taux); 
 				client1.printCompteClient();
 				this.menuTransaction(banque, client1, compte);
@@ -165,7 +190,12 @@ public class Menu {
 		System.out.println("###### Entrez 2 pour compte existant");
 		Scanner sc = new Scanner(System.in); 
 		int choix ;
-		choix = sc.nextInt(); 
+		choix = sc.nextInt();
+		if(choix > Integer.MAX_VALUE) {
+			 throw new RuntimeException("---- Valeur entree pas correcte ----");
+		}else if(choix < Integer.MIN_VALUE) {
+			throw new RuntimeException("---- Valeur entree pas correcte ----");
+		}
 		switch(choix) {
 			case 1 : {
 				this.subMenuCreerNouveauClientCompte(banque);
@@ -189,11 +219,21 @@ public class Menu {
 			System.out.println("###### Menu Transaction - Entrez votre choix ######");
 			System.out.print("Entrez l'identifiant du client :");
 			idClient = sc.nextInt();
+			if(idClient > Integer.MAX_VALUE) {
+				 throw new RuntimeException("---- Valeur entree pas correcte ----");
+			}else if(idClient < Integer.MIN_VALUE) {
+				throw new RuntimeException("---- Valeur entree pas correcte ----");
+			}
 			Client client = banque.getClient(idClient);
 			if( client != null) {
 				System.out.print("Entrez le numero de compte : ");
 				int numCompte ; 
 				numCompte = sc.nextInt(); 
+				if(numCompte > Integer.MAX_VALUE) {
+					 throw new RuntimeException("---- Valeur entree pas correcte ----");
+				}else if(numCompte < Integer.MIN_VALUE) {
+					throw new RuntimeException("---- Valeur entree pas correcte ----");
+				}
 				Compte compte = client.getCompte(numCompte); 
 				if(compte != null) {
 					this.menuTransaction(banque,client, compte);
@@ -224,6 +264,11 @@ public class Menu {
 		System.out.println("Entrez 2 pour retrait");	
 		System.out.println("#### 0 pour sortir du menu ####");
 		choix = sc.nextInt();
+		if(choix > Integer.MAX_VALUE) {
+			 throw new RuntimeException("---- Valeur entree pas correcte ----");
+		}else if(choix < Integer.MIN_VALUE) {
+			throw new RuntimeException("---- Valeur entree pas correcte ----");
+		}
 		switch(choix) {
 			case 1 : {
 				try {
@@ -231,6 +276,11 @@ public class Menu {
 					typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
 					System.out.print("Entrez montant du depot: ");
 					montant =  sc.nextDouble() ;
+					if(montant > Double.MAX_VALUE) {
+						 throw new RuntimeException("---- Valeur entree pas correcte ----");
+					}else if(montant < Double.MIN_VALUE) {
+						throw new RuntimeException("---- Valeur entree pas correcte ----");
+					}
 					Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
 					compte.printListeTransaction();
 				}catch(InputMismatchException e) {
@@ -244,6 +294,11 @@ public class Menu {
 					typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
 					System.out.print("Entrez montant du retrait : ");
 					montant =  sc.nextDouble() ;
+					if(montant > Double.MAX_VALUE) {
+						 throw new RuntimeException("---- Valeur entree pas correcte ----");
+					}else if(montant < Double.MIN_VALUE) {
+						throw new RuntimeException("---- Valeur entree pas correcte ----");
+					}
 					Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
 					compte.printListeTransaction();
 				}catch(InputMismatchException e) {

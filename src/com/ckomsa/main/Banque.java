@@ -27,6 +27,9 @@ public class Banque {
 	// liste des types de transaction de la banque 
 	 private HashSet<TypeTransaction> listeTypeTransaction = new HashSet();
 	
+	 public HashSet<Client> getClient(){
+		 return this.listeClient; 
+	 }
 	 
 	 
 	 /*
@@ -145,51 +148,57 @@ public class Banque {
 		Compte cpt = new Compte(clt, 122); 
 		System.out.println("///////////////////////////");
 		 */ 
-		Banque BIDV  = new Banque();
-		boolean fin = true;
-		do {
-			Menu MenuBanque = Menu.getInstanceMenu(BIDV," ");
-			Scanner sc =new Scanner(System.in);
-			try {
-				int choix = sc.nextInt(); 
-				if(choix < 0) {
-					// choix negatif 	
-					System.out.println("---- Votre choix doit etre un entier positif ----");
-					}else if(choix > 0) {
-						switch(choix) {
-							case 1 : {
-								MenuBanque.menuConsulteSolde(BIDV);	
-								break; 
+		try {
+			Banque BIDV  = new Banque();
+			boolean fin = true;
+			do {
+				Menu MenuBanque = Menu.getInstanceMenu(BIDV," ");
+				Scanner sc =new Scanner(System.in);
+				try {
+					int choix = sc.nextInt(); 
+					if(choix < 0) {
+						// choix negatif 	
+						System.out.println("---- Votre choix doit etre un entier positif ----");
+						}else if(choix > 0) {
+							switch(choix) {
+								case 1 : {
+									MenuBanque.menuConsulteSolde(BIDV);	
+									break; 
+								}
+								case 2 : {
+									MenuBanque.menuCreerCompte(BIDV);
+									break;
+								}
+								case 3 : {
+									MenuBanque.menuTransaction(BIDV);
+									break; 
+								}
+								case 4 : {
+									MenuBanque.menuCalculateInteret(BIDV);
+									break; 
+								}
+								default :{
+									MenuBanque.messageErreur();
+								}
+							
 							}
-							case 2 : {
-								MenuBanque.menuCreerCompte(BIDV);
-								break;
-							}
-							case 3 : {
-								MenuBanque.menuTransaction(BIDV);
-								break; 
-							}
-							case 4 : {
-								MenuBanque.menuCalculateInteret(BIDV);
-								break; 
-							}
-							default :{
-								MenuBanque.messageErreur();
-							}
-						
+							
+							//MenuBanque = Menu.getInstanceMenu(BIDV, " ");
+							//choix = sc.nextInt(); 
+						}else if(choix == 0) {
+							fin = false; 
 						}
-						
-						//MenuBanque = Menu.getInstanceMenu(BIDV, " ");
-						//choix = sc.nextInt(); 
-					}else if(choix == 0) {
-						fin = false; 
-					}
-			}catch(InputMismatchException e) {
-				System.out.println("---- Votre choix doit etre un entier ----");
-			}
-			
-		}while(fin);
-		BIDV.printListeClient();
+				}catch(InputMismatchException e) {
+					System.out.println("---- Votre choix doit etre un entier ----");
+				}
+				
+			}while(fin);
+			BIDV.printListeClient();
+		}catch(Error e) {
+			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+			System.out.println("$$$$$$$$  Une erreur grave est survenue : " + e+" $$$$$$$$$$");
+			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		}
 		System.out.println("Programme termine");
 		System.exit(0);
 			
