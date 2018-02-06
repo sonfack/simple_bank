@@ -52,8 +52,10 @@ public class Client {
 	
 	public void printCompteClient() {
 		System.out.println("---- Le client : "+this.nomClient+" pour Id : "+this.getIdClient()+" dispose des comptes suivants: ----" );
+		int compte ; 
 		for(int i = 0 ; i < this.listeCompte.size() ; i++) {
-			System.out.println("* compte "+i+1+" pour numero de compte: "+this.listeCompte.get(i).getNumCompte());
+			compte = i+1; 
+			System.out.println("* compte "+compte+" pour numero de compte: "+this.listeCompte.get(i).getNumCompte());
 		}
 	}
 	

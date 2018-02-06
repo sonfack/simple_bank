@@ -109,6 +109,28 @@ public class Banque {
 		}
 	}
 
+	public void printRapport() {
+		System.out.println("####################################################################################"); 
+		System.out.println("###                 Rapport  des transaction de la banque                       ####");
+		System.out.println("####################################################################################");
+		for(Client clt:this.listeClient) {
+			System.out.println("Nom : "+clt.nomClient);
+			for(int index =0 ; index< clt.listeCompte.size(); index++) {
+				System.out.println("Compte NO: "+ clt.listeCompte.get(index).getNumCompte());
+				System.out.println("Sole : "+clt.listeCompte.get(index).getSolde()+"Euros");
+				for(int intTrs = 0 ; intTrs < clt.listeCompte.get(index).getListeTransaction().size(); intTrs++) {
+					if(clt.listeCompte.get(index).getListeTransaction().get(intTrs).getNomTypeTransaction().equals("depot")) {
+						System.out.println("---- Déposer  un montant de "+ clt.listeCompte.get(index).getListeTransaction().get(intTrs).getMontantTransaction()+"Euros pour le compte "+ clt.listeCompte.get(index).getNumCompte()+"au "+clt.listeCompte.get(index).getListeTransaction().get(intTrs).getDateTransaction());
+					}else if(clt.listeCompte.get(index).getListeTransaction().get(intTrs).getNomTypeTransaction().equals("retrait")) {
+						System.out.println("---- Retirer  un montant de "+ clt.listeCompte.get(index).getListeTransaction().get(intTrs).getMontantTransaction()+"Euros pour le compte "+ clt.listeCompte.get(index).getNumCompte()+"au "+clt.listeCompte.get(index).getListeTransaction().get(intTrs).getDateTransaction());
+					}
+				}
+			}
+			System.out.println("\n----------------------------------------------------------------------------------\n");
+		}
+		
+	}
+	
 	public void printListeTypeTransaction() {
 		for(TypeTransaction trs:this.listeTypeTransaction) {
 			System.out.println(trs.getTypeTransaction());
@@ -176,6 +198,10 @@ public class Banque {
 								case 4 : {
 									MenuBanque.menuCalculateInteret(BIDV);
 									break; 
+								}
+								case 5 : {
+									BIDV.printRapport();
+									break ; 
 								}
 								default :{
 									MenuBanque.messageErreur();

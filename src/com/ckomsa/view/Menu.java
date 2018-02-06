@@ -22,6 +22,7 @@ public class Menu {
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
 		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
 		System.out.println("#### Entrez 4 pour calculer l'interet"); 
+		System.out.println("#### Entrez 5 pour produit le raport"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
 		Menu.menuInstance = this;
 	}
@@ -36,7 +37,12 @@ public class Menu {
 		System.out.println("#### Entrez 2 pour créer un nouveau compte");
 		System.out.println("#### Entrez 3 pour nouvelle transaction"); 
 		System.out.println("#### Entrez 4 pour calculer l'interet");
+		System.out.println("#### Entrez 5 pour produit le raport"); 
 		System.out.println("#### 0 pour sortir de l'application ####");
+	}
+	
+	public void menuRapport(Banque banque) {
+		
 	}
 	
 	public static  Menu getInstanceMenu(Banque banque, String message) {
@@ -68,7 +74,7 @@ public class Menu {
 				int idClient = donnee.nextInt();
 				if(idClient > Integer.MAX_VALUE) {
 					 throw new RuntimeException("---- Valeur entree pas correcte ----");
-				}else if(idClient < Integer.MIN_VALUE) {
+				}else if(idClient < Integer.MIN_VALUE || idClient <= 0) {
 					throw new RuntimeException("---- Valeur entree pas correcte ----");
 				}
 				Client client =  banque.getClient(idClient); 
@@ -78,7 +84,7 @@ public class Menu {
 						int numCompte = donnee.nextInt();
 						if(numCompte > Integer.MAX_VALUE) {
 							 throw new RuntimeException("---- Valeur entree pas correcte ----");
-						}else if(numCompte < Integer.MIN_VALUE) {
+						}else if(numCompte < Integer.MIN_VALUE || numCompte <=0) {
 							throw new RuntimeException("---- Valeur entree pas correcte ----");
 						}
 						Compte compte = client.getCompte(numCompte); 
@@ -129,10 +135,15 @@ public class Menu {
 			System.out.println("\nMenu Creer nouveau client et compte\n");
 			System.out.print("Entrer le nom :  "); 
 			nom = donnee.nextLine();
-			try {
-				System.out.println(" ");
-				System.out.print("Entrez le taux : ");
+			System.out.println(" ");
+			System.out.print("Entrez le taux : ");
+			try {	
 				taux = donnee.nextInt(); 
+//				if(taux > Integer.MAX_VALUE) {
+//					 throw new RuntimeException("---- Valeur entree pas correcte ----");
+//				}else if(taux < Integer.MIN_VALUE || taux <=0) {
+//					throw new RuntimeException("---- Valeur entree pas correcte ----");
+//				}
 				client1 =  new Client(banque, nom);
 				compte = new Compte(client1, taux); 
 				client1.printCompteClient();
@@ -188,6 +199,7 @@ public class Menu {
 		System.out.println("###### Sous Menu Creer Compte - Entrez votre choix ######");
 		System.out.println("###### Entrez 1 pour nouveau compte");
 		System.out.println("###### Entrez 2 pour compte existant");
+		System.out.println("###### Entrez 0 pour compte existant");
 		Scanner sc = new Scanner(System.in); 
 		int choix ;
 		choix = sc.nextInt();
@@ -203,6 +215,9 @@ public class Menu {
 			}
 			case 2 : {
 				this.subMenuCreerNouveauCompte(banque);
+				break; 
+			}
+			case 0 : {
 				break; 
 			}
 			default: {
@@ -276,9 +291,9 @@ public class Menu {
 					typeTransaction = banque.getTypeTransaction(nomTypeTransaction); 
 					System.out.print("Entrez montant du depot: ");
 					montant =  sc.nextDouble() ;
-					if(montant > Double.MAX_VALUE) {
+					if(montant > Double.MAX_VALUE ) {
 						 throw new RuntimeException("---- Valeur entree pas correcte ----");
-					}else if(montant < Double.MIN_VALUE) {
+					}else if(montant < Double.MIN_VALUE || montant < 0) {
 						throw new RuntimeException("---- Valeur entree pas correcte ----");
 					}
 					Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
@@ -296,7 +311,7 @@ public class Menu {
 					montant =  sc.nextDouble() ;
 					if(montant > Double.MAX_VALUE) {
 						 throw new RuntimeException("---- Valeur entree pas correcte ----");
-					}else if(montant < Double.MIN_VALUE) {
+					}else if(montant < Double.MIN_VALUE || montant <= 0) {
 						throw new RuntimeException("---- Valeur entree pas correcte ----");
 					}
 					Transaction transaction =  new Transaction(client, compte,typeTransaction,montant );
