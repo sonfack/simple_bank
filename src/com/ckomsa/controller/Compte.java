@@ -14,7 +14,7 @@ public class Compte{
 	public static int indiceCompte  = 0;  
 	// liste des transactions du compte
 	ArrayList<Transaction> listeTransaction = new ArrayList<Transaction>(); 
-	private Client client;
+	//private Client client;
 	private int numCompte; 
 	private double solde ;
 	public int tauxInteret; 
@@ -29,7 +29,7 @@ public class Compte{
 		this.solde = 0;
 		this.tauxInteret = taux;
 		client.listeCompte.add(this);
-		System.out.println("\n---- OK Compte : "+this.numCompte+" taux : "+this.tauxInteret+"  client : "+client.nomClient+"----\n" );
+		System.out.println("\tCompte = "+this.numCompte+" ; nom client = "+client.nomClient+" identifiant = "+client.getIdClient(client)+" ; montant = "+this.getSolde() +" et taux = "+this.tauxInteret+"%" );
 	}
 	
 	
@@ -39,22 +39,34 @@ public class Compte{
 		this.solde = 0;
 		this.tauxInteret = 0;
 		client.listeCompte.add(this);
-		System.out.println("\n---- OK Compte : "+this.numCompte+" taux : "+this.tauxInteret+"  client : "+client.nomClient+"----\n" );
-
+		System.out.println("\tCompte = "+this.numCompte+" ; nom client = "+client.nomClient+" identifiant = "+client.getIdClient(client)+" ; montant = "+this.getSolde() +" et taux = "+this.tauxInteret+"%" );
 	}
 	
 	
-	public void printListeTransaction() {
-		 for (int i = 0; i < this.getListeTransaction().size(); i++) { 		      
-	          System.out.println("----"+this.getListeTransaction().get(i).getNomTypeTransaction()+" montant de "+this.getListeTransaction().get(i).getMontantTransaction()+" pour le compte "+this.getNumCompte()+" au "+this.getListeTransaction().get(i).getDateTransaction()+"----"); 		
-	      } 
+	public void printTransaction(Transaction transaction) {
+		if(transaction != null) {
+			if(transaction.getNomTypeTransaction().equals("depot")) {
+				 System.out.println("---- Dépot un montant de "+transaction.getMontantTransaction()+"Euros pour le compte "+this.getNumCompte()+" au "+transaction.getDateTransaction()+" ----");
+
+			}else if(transaction.getNomTypeTransaction().equals("retrait")) {
+				 System.out.println("---- Retrait un montant de "+transaction.getMontantTransaction()+"Euros pour le compte "+this.getNumCompte()+" au "+transaction.getDateTransaction()+" ----");
+				
+			}
+		}else {
+			System.out.println("null");
+		}
 	}
 	
 	
 	public void printListeTransaction(String nomTypeTransaction) {
 		 for (int i = 0; i < this.getListeTransaction().size(); i++) {
 			 if(nomTypeTransaction.equals(this.getListeTransaction().get(i).getNomTypeTransaction())) {
-				 System.out.println("----"+this.getListeTransaction().get(i).getNomTypeTransaction()+" montant de "+this.getListeTransaction().get(i).getMontantTransaction()+" pour le compte "+this.getNumCompte()+" au "+this.getListeTransaction().get(i).getDateTransaction()+"----");
+				 if(nomTypeTransaction.equals("depot")) {
+					 System.out.println("---- Dépot un montant de "+this.getListeTransaction().get(i).getMontantTransaction()+" pour le compte "+this.getNumCompte()+" au "+this.getListeTransaction().get(i).getDateTransaction()+" ----");
+				 }else if(nomTypeTransaction.equals("retrait")) {
+					 System.out.println("---- Retrait un montant de "+this.getListeTransaction().get(i).getMontantTransaction()+" pour le compte "+this.getNumCompte()+" au "+this.getListeTransaction().get(i).getDateTransaction()+" ----");
+				 }
+				
 			 }
 	     } 
 	}

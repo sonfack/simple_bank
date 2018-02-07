@@ -177,10 +177,11 @@ public class Banque {
 				Menu MenuBanque = Menu.getInstanceMenu(BIDV," ");
 				Scanner sc =new Scanner(System.in);
 				try {
+					System.out.print("\n\n*Choix : ");
 					int choix = sc.nextInt(); 
 					if(choix < 0) {
 						// choix negatif 	
-						System.out.println("---- Votre choix doit etre un entier positif ----");
+						System.out.println("*Reponse : ---- Votre choix doit etre un entier positif ----");
 						}else if(choix > 0) {
 							switch(choix) {
 								case 1 : {
@@ -203,6 +204,10 @@ public class Banque {
 									BIDV.printRapport();
 									break ; 
 								}
+								case 6 : {
+									MenuBanque.menuRecherche(BIDV); 
+									break; 
+								}
 								default :{
 									MenuBanque.messageErreur();
 								}
@@ -215,9 +220,9 @@ public class Banque {
 							fin = false; 
 						}
 				}catch(InputMismatchException e) {
-					System.out.println("---- Votre choix doit etre un entier ----");
+					System.out.println("*Reponse : ---- Votre choix doit etre un entier en 0 et 6, verifiez le menu et entrez a nouveau ----");
 				}
-				
+			
 			}while(fin);
 			BIDV.printListeClient();
 		}catch(Error e) {
@@ -225,6 +230,7 @@ public class Banque {
 			System.out.println("$$$$$$$$  Une erreur grave est survenue : " + e+" $$$$$$$$$$");
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		}
+		
 		System.out.println("Programme termine");
 		System.exit(0);
 			

@@ -34,7 +34,7 @@ public class Client {
 		this.nomClient = nom.toUpperCase(); 
 		this.idClient = Client.indiceClient ; 
 		banque.setListeClient(this);
-		System.out.println("\n---- OK Client : "+this.nomClient+" identifiant : "+this.idClient+" ----\n" );
+		System.out.print("\n---- Creer un nouveau compte pour "+this.nomClient+" avec :\n");
 	}
 	
 	
@@ -51,12 +51,18 @@ public class Client {
 	}
 	
 	public void printCompteClient() {
-		System.out.println("---- Le client : "+this.nomClient+" pour Id : "+this.getIdClient()+" dispose des comptes suivants: ----" );
+		
 		int compte ; 
-		for(int i = 0 ; i < this.listeCompte.size() ; i++) {
-			compte = i+1; 
-			System.out.println("* compte "+compte+" pour numero de compte: "+this.listeCompte.get(i).getNumCompte());
+		if(this.listeCompte.size() >0) {
+			System.out.println("---- Le client : "+this.nomClient+" pour Id : "+this.getIdClient()+" dispose de :"+this.listeCompte.size() +" ----" );
+			for(int i = 0 ; i < this.listeCompte.size() ; i++) {
+				compte = i+1; 
+				System.out.println("* compte "+compte+" pour numero de compte: "+this.listeCompte.get(i).getNumCompte());
+			}
+		}else {
+			System.out.println("---- Aucun compte pour "+this.nomClient+ " pour Id : "+this.getIdClient()+" ----");
 		}
+		
 	}
 	
 	public Compte getCompte(int numCompte) {
