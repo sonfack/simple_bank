@@ -72,7 +72,7 @@ public class Compte{
 	}
 	
 	
-	/*
+	/**
 	 * Cette fonction returne la liste des transaction d'un compte
 	 * 
 	 */
@@ -85,7 +85,15 @@ public class Compte{
 	}
 	
 	
-	/*
+	/**
+	 * Cette methode calcul l'interet d'un solde 
+	 * @param taux
+	 */
+	public void setInteret() {
+		this.setSolde((this.getSolde()*this.getTaux())/100 + this.getSolde()); 
+	}
+	
+	/**
 	 * Cette fonction retourne le numéro de compte
 	 */
 	
@@ -93,35 +101,35 @@ public class Compte{
 		return this.solde; 
 	}
 	
-	/*
+	/**
 	 * Cette fonction retourne le taux d'interet d'un compte
 	 */
 	public int getTaux() {
 		return this.tauxInteret; 
 	}
 	
-	/*
+	/**
 	 *Cette fonction permet d'initialiser un numero de compte 
 	 */
 	public void setNumCompte(int numcompte) {
 		this.numCompte = numcompte;
 	}
 	
-	/*
+	/**
 	 * Cette fonction permet d'initialiser un solde 
 	 */
 	public void setSolde(double solde) {
 		this.solde = solde;
 	}
 	
-	/*
-	 * 
+	/**
+	 * Cette fonction retour 
 	 */
 	public int getNumCompte() {
 		return this.numCompte; 
 	}
 	
-	/*
+	/**
 	 * Cette fonction permet d'ajouter une transaction a un compte
 	 * 
 	 */

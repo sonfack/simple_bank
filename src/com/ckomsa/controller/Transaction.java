@@ -18,9 +18,16 @@ public class Transaction {
 	private Date dateTransation ; 
 	private double montantTransaction ; 
 	
-	// Création d'une transaction avec un type de transaction et sans montant
+	/**
+	 * Création d'une transaction avec un type de transaction et sans montant
+	 * @param client
+	 * @param compte
+	 * @param type
+	 * @param montant
+	 */
 	public Transaction(Client client, Compte compte, TypeTransaction type, double montant) {
-		switch(type.getTypeTransaction()) {
+		if(montant > 0) {
+			switch(type.getTypeTransaction()) {
 			case "retrait":{
 				if(compte.getSolde() < montant) {
 					System.out.println("Solde insufisant");
@@ -34,10 +41,9 @@ public class Transaction {
 					compte.getListeTransaction().add(this); 
 					compte.setSolde(compte.getSolde() - montant); 
 					System.out.println("Transaction OK");
-					compte.printTransaction(this);
-					break ;
+					compte.printTransaction(this);	
 				}
-				 
+				break ;
 			}
 			case "depot" : {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -54,19 +60,33 @@ public class Transaction {
 			}
 			
 		}
-		
+		}else {
+			System.out.println("Echec transation \n---- Montant nul ou negatif ----");
+		}
 	}
-	
+
+	/**
+	 * Cette methode permet de retouner le nom d'une transaction
+	 * @return nom du type de transaction
+	 */
 	public String getNomTypeTransaction() {
 		String nomTypeTransaction ; 
 		nomTypeTransaction = this.typeTransaction.getTypeTransaction(); 
 		return nomTypeTransaction; 
 	}
 	
+	/**
+	 * Cette methode permet de retourner la date d'une transaction
+	 * @return date d'une transaction
+	 */
 	public Date getDateTransaction() {
 		return this.dateTransation; 
 	}
 	
+	/**
+	 * Cette fonction permet de retourner le montant d'une transaction
+	 * @return montant de la transaction
+	 */
 	public double getMontantTransaction() {
 		return this.montantTransaction ; 
 	}

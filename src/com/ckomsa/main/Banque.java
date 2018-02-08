@@ -32,7 +32,7 @@ public class Banque {
 	 }
 	 
 	 
-	 /*
+	 /**
 	  * Cette fonction  retourne  la liste des types transaction 
 	  */
 	 public HashSet<TypeTransaction> getTypeTransaction() {
@@ -49,6 +49,9 @@ public class Banque {
 		 return type; 
 	 }
 	 
+	 /**
+	  * recherche un client connaissant a partir de son identifiant
+	  */
 	 public Client getClient(int idClient) {
 		 Client client = null ; 
 		 for(Client clt:this.listeClient) {
@@ -84,23 +87,28 @@ public class Banque {
 		
 	}
 	
-	/*
-	 * Calcul d'interet
+	/**
+	 * Calcule d'interet
 	 */
 	public void calculateInteret() {
-		 for(Client clt:this.listeClient) {
-			 System.out.println("Client : "+clt.nomClient);
-			 for(int i = 0 ; i < clt.listeCompte.size() ; i++) {
-				 	System.out.println("Numero de complte"+clt.listeCompte.get(i).getNumCompte());
+		if(this.listeClient.size() == 0) {
+			System.out.println("---- Aucun client dans la banque ----");
+		}else {
+			for(Client clt:this.listeClient) {
+				System.out.println("Client : "+clt.nomClient);
+				for(int i = 0 ; i < clt.listeCompte.size() ; i++) {
+					System.out.println("Numero de complte"+clt.listeCompte.get(i).getNumCompte());
 				 	System.out.println("----Solde : "+clt.listeCompte.get(i).getSolde()+"----");
-					clt.listeCompte.get(i).setSolde((clt.listeCompte.get(i).getTaux()*clt.listeCompte.get(i).getSolde())/100 + clt.listeCompte.get(i).getSolde());
+				 	clt.listeCompte.get(i).setInteret();
+					//clt.listeCompte.get(i).setSolde((clt.listeCompte.get(i).getTaux()*clt.listeCompte.get(i).getSolde())/100 + clt.listeCompte.get(i).getSolde());
 					System.out.println("----Nouveau solde : "+clt.listeCompte.get(i).getSolde()+"  pour Interet : "+clt.listeCompte.get(i).getTaux()+" ----");
-			 }
-			 System.out.println("----------------------------------------------------------");
-		 }
+				}
+				System.out.println("----------------------------------------------------------");
+			}
+		}
 	}
 	
-	/*
+	/**
 	 * 
 	 */
 	public void printListeClient() {
@@ -109,28 +117,46 @@ public class Banque {
 		}
 	}
 
+	/**
+	 * Cette fonction retourn le rapport des transation de la banque 
+	 */
 	public void printRapport() {
-		System.out.println("####################################################################################"); 
-		System.out.println("###                 Rapport  des transaction de la banque                       ####");
-		System.out.println("####################################################################################");
+		System.out.println("##############################################"); 
+		System.out.println("### Rapport  des transaction de la banque ####");
+		System.out.println("##############################################");
 		for(Client clt:this.listeClient) {
 			System.out.println("Nom : "+clt.nomClient);
 			for(int index =0 ; index< clt.listeCompte.size(); index++) {
 				System.out.println("Compte NO: "+ clt.listeCompte.get(index).getNumCompte());
 				System.out.println("Sole : "+clt.listeCompte.get(index).getSolde()+"Euros");
-				for(int intTrs = 0 ; intTrs < clt.listeCompte.get(index).getListeTransaction().size(); intTrs++) {
-					if(clt.listeCompte.get(index).getListeTransaction().get(intTrs).getNomTypeTransaction().equals("depot")) {
-						System.out.println("---- Déposer  un montant de "+ clt.listeCompte.get(index).getListeTransaction().get(intTrs).getMontantTransaction()+"Euros pour le compte "+ clt.listeCompte.get(index).getNumCompte()+"au "+clt.listeCompte.get(index).getListeTransaction().get(intTrs).getDateTransaction());
-					}else if(clt.listeCompte.get(index).getListeTransaction().get(intTrs).getNomTypeTransaction().equals("retrait")) {
-						System.out.println("---- Retirer  un montant de "+ clt.listeCompte.get(index).getListeTransaction().get(intTrs).getMontantTransaction()+"Euros pour le compte "+ clt.listeCompte.get(index).getNumCompte()+"au "+clt.listeCompte.get(index).getListeTransaction().get(intTrs).getDateTransaction());
+				for(int intTrs = 0 ; 
+						intTrs < clt.listeCompte.get(index).getListeTransaction().size(); 
+						intTrs++) {
+					if(
+						clt.listeCompte.get(index).getListeTransaction().
+						get(intTrs).getNomTypeTransaction().equals("depot")) {
+						System.out.println("---- Déposer  un montant de "+
+						clt.listeCompte.get(index).getListeTransaction().get(intTrs).
+						getMontantTransaction()+"Euros pour le compte "+ clt.listeCompte.
+						get(index).getNumCompte()+"au "+clt.listeCompte.get(index).
+						getListeTransaction().get(intTrs).getDateTransaction());
+					}else if(clt.listeCompte.get(index).getListeTransaction().
+							get(intTrs).getNomTypeTransaction().equals("retrait")) {
+						System.out.println("---- Retirer  un montant de "+ 
+							clt.listeCompte.get(index).getListeTransaction().get(intTrs).
+							getMontantTransaction()+"Euros pour le compte "+ clt.listeCompte.get(index).getNumCompte()+"au "+clt.listeCompte.get(index).getListeTransaction().get(intTrs).getDateTransaction());
 					}
 				}
 			}
-			System.out.println("\n----------------------------------------------------------------------------------\n");
+			System.out.println("\n----------------------------------------\n");
 		}
 		
 	}
 	
+	
+	/**
+	 * 
+	 */
 	public void printListeTypeTransaction() {
 		for(TypeTransaction trs:this.listeTypeTransaction) {
 			System.out.println(trs.getTypeTransaction());
